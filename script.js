@@ -2,6 +2,10 @@ const questions = [
   { question: "What planet is known as the Red Planet?", answer: "Mars" },
   { question: "What is the largest ocean on Earth?", answer: "Pacific" },
   { question: "Who wrote 'Romeo and Juliet'?", answer: "Shakespeare" },
+  {
+    question: "What gas do plants absorb from the atmosphere?",
+    answer: "Carbon dioxide"
+  },
   { question: "What gas do plants absorb from the atmosphere?", answer: "Carbon dioxide" },
   { question: "What is 9 x 7?", answer: "63" }
 ];
@@ -14,6 +18,10 @@ const answerInput = document.getElementById("answer-input");
 const submitBtn = document.getElementById("submit-btn");
 const nextBtn = document.getElementById("next-btn");
 const restartBtn = document.getElementById("restart-btn");
+const themeToggleBtn = document.getElementById("theme-toggle");
+
+const THEME_STORAGE_KEY = "trivia-theme";
+const systemDarkQuery = window.matchMedia("(prefers-color-scheme: dark)");
 
 let currentIndex = 0;
 let score = 0;
@@ -32,6 +40,41 @@ function setFeedback(message, type = "info") {
   feedbackEl.className = `feedback ${type}`;
 }
 
+function applyTheme(theme) {
+  document.documentElement.dataset.theme = theme;
+  themeToggleBtn.textContent = theme === "dark" ? "☀️" : "🌙";
+  themeToggleBtn.setAttribute(
+    "aria-label",
+    theme === "dark" ? "Switch to light mode" : "Switch to dark mode"
+  );
+}
+
+function getInitialTheme() {
+  const savedTheme = localStorage.getItem(THEME_STORAGE_KEY);
+  if (savedTheme === "light" || savedTheme === "dark") {
+    return savedTheme;
+  }
+  return systemDarkQuery.matches ? "dark" : "light";
+}
+
+function initTheme() {
+  applyTheme(getInitialTheme());
+
+  themeToggleBtn.addEventListener("click", () => {
+    const nextTheme =
+      document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+    applyTheme(nextTheme);
+    localStorage.setItem(THEME_STORAGE_KEY, nextTheme);
+  });
+
+  systemDarkQuery.addEventListener("change", (event) => {
+    const hasManualPreference = localStorage.getItem(THEME_STORAGE_KEY);
+    if (!hasManualPreference) {
+      applyTheme(event.matches ? "dark" : "light");
+    }
+  });
+}
+
 function renderQuestion() {
   updateScore();
 
@@ -45,6 +88,7 @@ function renderQuestion() {
     return;
   }
 
+  questionEl.textContent = questions[currentIndex].question;
   const currentQuestion = questions[currentIndex];
   questionEl.textContent = currentQuestion.question;
   answerInput.value = "";
@@ -105,4 +149,5 @@ restartBtn.addEventListener("click", () => {
   renderQuestion();
 });
 
+initTheme();
 renderQuestion();

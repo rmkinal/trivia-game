@@ -1,5 +1,39 @@
 :root {
   color-scheme: light;
+  --bg: #f5f7ff;
+  --bg-gradient: radial-gradient(circle at top right, #dbeafe, transparent 50%);
+  --card-bg: #ffffff;
+  --text: #0f172a;
+  --muted: #64748b;
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  --secondary: #475569;
+  --secondary-hover: #334155;
+  --ghost: #111827;
+  --success: #15803d;
+  --error: #b91c1c;
+  --border: #e2e8f0;
+  --ring: rgba(37, 99, 235, 0.25);
+  --shadow: 0 12px 30px rgba(15, 23, 42, 0.1);
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0b1220;
+  --bg-gradient: radial-gradient(circle at top right, #1e293b, transparent 50%);
+  --card-bg: #111827;
+  --text: #e5e7eb;
+  --muted: #94a3b8;
+  --accent: #60a5fa;
+  --accent-hover: #3b82f6;
+  --secondary: #334155;
+  --secondary-hover: #475569;
+  --ghost: #1f2937;
+  --success: #22c55e;
+  --error: #f87171;
+  --border: #334155;
+  --ring: rgba(96, 165, 250, 0.3);
+  --shadow: 0 16px 36px rgba(0, 0, 0, 0.45);
   --bg: #f4f6fb;
   --card-bg: #ffffff;
   --text: #1f2937;
@@ -24,6 +58,57 @@ body {
   display: grid;
   place-items: center;
   padding: 1rem;
+  background: var(--bg-gradient), var(--bg);
+  color: var(--text);
+  font-family: "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 1.0625rem;
+  line-height: 1.5;
+}
+
+.app {
+  width: min(100%, 36rem);
+  display: grid;
+  gap: 1rem;
+}
+
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.eyebrow {
+  margin: 0;
+  color: var(--muted);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 0.82rem;
+}
+
+h1 {
+  margin: 0.25rem 0 0;
+  font-size: clamp(1.9rem, 5vw, 2.4rem);
+  line-height: 1.2;
+}
+
+.subtitle {
+  margin: 0.45rem 0 0;
+  color: var(--muted);
+  font-size: 1.05rem;
+}
+
+.icon-btn {
+  border: 1px solid var(--border);
+  background: var(--card-bg);
+  color: var(--text);
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 1.05rem;
+  box-shadow: var(--shadow);
 }
 
 .app {
@@ -46,6 +131,30 @@ h1 {
 .card {
   background: var(--card-bg);
   border: 1px solid var(--border);
+  border-radius: 1rem;
+  box-shadow: var(--shadow);
+  padding: 1.2rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.status-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.score {
+  margin: 0;
+  color: var(--muted);
+  font-weight: 700;
+  font-size: 1.03rem;
+}
+
+.question {
+  margin: 0;
+  font-size: 1.24rem;
+  font-weight: 600;
   border-radius: 0.75rem;
   padding: 1rem;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
@@ -69,6 +178,22 @@ button {
 }
 
 input {
+  min-height: 2.95rem;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
+  border-radius: 0.7rem;
+  padding: 0.8rem 0.9rem;
+}
+
+input::placeholder {
+  color: var(--muted);
+}
+
+input:focus,
+button:focus-visible {
+  outline: 3px solid var(--ring);
+  outline-offset: 2px;
   border: 1px solid var(--border);
   border-radius: 0.5rem;
   padding: 0.75rem;
@@ -77,6 +202,45 @@ input {
 
 button {
   border: none;
+  border-radius: 0.7rem;
+  min-height: 2.95rem;
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  font-weight: 700;
+  transition: background-color 120ms ease, transform 120ms ease;
+}
+
+button:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+#submit-btn {
+  background: var(--accent);
+  color: #fff;
+}
+
+#submit-btn:hover:not(:disabled) {
+  background: var(--accent-hover);
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+}
+
+.secondary {
+  background: var(--secondary);
+  color: #fff;
+}
+
+.secondary:hover:not(:disabled) {
+  background: var(--secondary-hover);
+}
+
+.ghost {
+  background: var(--ghost);
+  color: #fff;
   border-radius: 0.5rem;
   padding: 0.75rem 1rem;
   min-height: 2.75rem;
@@ -116,6 +280,8 @@ button:disabled {
 
 .feedback {
   min-height: 1.5rem;
+  margin: 0;
+  font-weight: 700;
   margin-top: 0.75rem;
   margin-bottom: 0;
   font-weight: 600;
@@ -133,6 +299,11 @@ button:disabled {
   color: var(--muted);
 }
 
+button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
 .sr-only {
   position: absolute;
   width: 1px;
@@ -145,6 +316,17 @@ button:disabled {
   border: 0;
 }
 
+@media (max-width: 560px) {
+  body {
+    padding: 0.85rem;
+  }
+
+  .card {
+    padding: 1rem;
+  }
+
+  .actions {
+    grid-template-columns: 1fr;
 @media (max-width: 480px) {
   .card {
     padding: 0.9rem;
