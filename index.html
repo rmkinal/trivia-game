@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trivia Game</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app" aria-live="polite">
+      <h1>Trivia Challenge</h1>
+      <p id="score" class="score">Score: 0 / 0</p>
+
+      <section class="card">
+        <p id="question" class="question">Loading question...</p>
+
+        <form id="answer-form" class="answer-form" autocomplete="off">
+          <label for="answer-input" class="sr-only">Your answer</label>
+          <input
+            id="answer-input"
+            name="answer"
+            type="text"
+            placeholder="Type your answer"
+            required
+          />
+          <button type="submit" id="submit-btn">Submit</button>
+        </form>
+
+        <p id="feedback" class="feedback" role="status"></p>
+
+        <div class="actions">
+          <button id="next-btn" class="secondary" type="button" disabled>
+            Next Question
+          </button>
+          <button id="restart-btn" class="ghost" type="button">Restart</button>
+        </div>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
