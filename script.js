@@ -6,6 +6,7 @@ const questions = [
     question: "What gas do plants absorb from the atmosphere?",
     answer: "Carbon dioxide"
   },
+  { question: "What gas do plants absorb from the atmosphere?", answer: "Carbon dioxide" },
   { question: "What is 9 x 7?", answer: "63" }
 ];
 
@@ -88,6 +89,8 @@ function renderQuestion() {
   }
 
   questionEl.textContent = questions[currentIndex].question;
+  const currentQuestion = questions[currentIndex];
+  questionEl.textContent = currentQuestion.question;
   answerInput.value = "";
   answerInput.disabled = false;
   submitBtn.disabled = false;
